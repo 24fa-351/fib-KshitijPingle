@@ -8,45 +8,45 @@
 #include <stdlib.h>
 
 //Recursive Fibonacci Sequence
-   unsigned long fib_recurse(unsigned long previous, unsigned long current, unsigned long max, unsigned long count) {
+unsigned long fib_recurse(unsigned long previous, unsigned long current, unsigned long max, unsigned long count) {
 
-      //Check if we're stopping
-      if (count >= max) {
-         return current;
-      }
-
-      int temp = previous;
-
-      previous = current;
-      current += temp;
-
-      if (count == 1) {
-         current++;        //Update current on first func call
-      }
-
-      //Recursively call function
-      unsigned long fib_num = fib_recurse(previous, current, max, count + 1);
-
-      return fib_num;
-   }
-
-   //Iterative Fibonacci Sequence
-   unsigned long fib_iterate(unsigned long previous, unsigned long current, unsigned long max) {
-      
-      unsigned long temp = 0;
-   
-      for (int i = 1; i < max; ++i) {     //Sorry prof, I like my 'i' counter vars
-         temp = previous;
-         previous = current;
-         current += temp;
-      
-         if (i == 1) {
-            current++;     //Update current on first iteration
-         }
-      
-      }
+   //Check if we're stopping
+   if (count >= max) {
       return current;
    }
+
+   int temp = previous;
+
+   previous = current;
+   current += temp;
+
+   if (count == 1) {
+      current++;        //Update current on first func call
+   }
+
+   //Recursively call function
+   unsigned long fib_num = fib_recurse(previous, current, max, count + 1);
+
+   return fib_num;
+}
+
+//Iterative Fibonacci Sequence
+unsigned long fib_iterate(unsigned long previous, unsigned long current, unsigned long max) {
+      
+   unsigned long temp = 0;
+   
+   for (int i = 1; i < max; ++i) {     //Sorry prof, I like my 'i' counter vars
+      temp = previous;
+      previous = current;
+      current += temp;
+      
+      if (i == 1) {
+         current++;     //Update current on first iteration
+      }
+      
+   }
+   return current;
+}
 
 
 int main(int argc, char *argv[]) {
