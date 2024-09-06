@@ -51,12 +51,6 @@
 
 int main(int argc, char *argv[]) {
 
-   //Check if we received 3 arguments
-   // if (argc < 4) {
-   //    printf("\nWrong number of arguments passed. Please pass atleast 3 arguments\n\n");
-   //    return 1;
-   // }
-
    //Receive and process all passed arguments
    unsigned long num1 = atoi(argv[1]);
 
