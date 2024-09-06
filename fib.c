@@ -21,7 +21,7 @@
       current += temp;
 
       if (count == 1) {
-         current++;     //Update current on first func call
+         current++;        //Update current on first func call
       }
 
       //Recursively call function
