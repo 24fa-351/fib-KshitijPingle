@@ -7,35 +7,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef unsigned int (*FibFuncPtr) (unsigned int n);
+
 //Recursive Fibonacci Sequence
-unsigned long fib_recurse(unsigned long previous, unsigned long current, unsigned long max, unsigned long count) {
+unsigned int fib_recurse(unsigned int n) {
 
-   //Check if we're stopping
-   if (count >= max) {
-      return current;
+   if (n < 2) {
+      return n;
    }
-
-   int temp = previous;
-
-   previous = current;
-   current += temp;
-
-   if (count == 1) {
-      current++;        //Update current on first func call
-   }
-
-   //Recursively call function
-   unsigned long fib_num = fib_recurse(previous, current, max, count + 1);
-
-   return fib_num;
+   return fib_recurse(n - 1) + fib_recurse(n - 2);
 }
 
 //Iterative Fibonacci Sequence
-unsigned long fib_iterate(unsigned long previous, unsigned long current, unsigned long max) {
+unsigned int fib_iterate(unsigned int n) {
       
-   unsigned long temp = 0;
+   unsigned int temp = 0;
+   unsigned int previous = 0;
+   unsigned int current = 0;
    
-   for (int i = 1; i < max; ++i) {     //Sorry prof, I like my 'i' counter vars
+   for (unsigned int i = 1; i < n; ++i) {     //Sorry prof, I like my 'i' counter vars
       temp = previous;
       previous = current;
       current += temp;
@@ -45,49 +35,54 @@ unsigned long fib_iterate(unsigned long previous, unsigned long current, unsigne
       }
       
    }
+
    return current;
 }
 
 
-int main(int argc, char *argv[]) {
+int main(unsigned int argc, char *argv[]) {
 
    //Receive and process all passed arguments
-   unsigned long num1 = atoi(argv[1]);
+   unsigned int num1 = atoi(argv[1]);
 
-   char route = argv[2][0];               //"i" = iterative, "r" = recursive
+   char fib_method = argv[2][0];           //"i" = iterative, "r" = recursive
 
-   unsigned long num2 = 0;
+   unsigned int num2 = 0;
 
-   FILE *file = fopen(argv[3], "r");      //"r" = read
+   FILE *file = fopen(argv[3], "r");       //"r" = read
 
-   fscanf(file, "%lu", &num2);            //Get single num from file
+   fscanf(file, "%u", &num2);            //Get single num from file
    fclose(file);
 
-   unsigned long max = num1 + num2;
+   unsigned int max = num1 + num2;
 
-   unsigned long previous = 0;
-   unsigned long current = 0;
-   unsigned long fib_num = 0;
+   FibFuncPtr fib_routine;
 
    //Fibonnaci Sequence
       // 0 1 1 2 3 5 8 13 21 34 55 ...
 
-   switch (route) {
+   switch (fib_method) {
       case 'i':
          //Call Iterative Fibonacci Function
-         fib_num = fib_iterate(previous, current, max);
+         // fib_num = fib_iterate(previous, current, max);
+         fib_routine = fib_iterate;
          break;
 
       case 'r':
          //Call Recursive Fibonacci Function
-         fib_num = fib_recurse(previous, current, max, 1);
+         //fib_num = fib_recurse_provider(max - 1);
+         // fib_num = fib_recurse(max - 1);
+         fib_routine = fib_recurse;
+         --max;
          break;
    
       default:
          break;
    }
 
-   printf("%lu", fib_num);       //'lu' means unsigned long
+   unsigned int fib_num = fib_routine(max);
+
+   printf("%u", fib_num);       //'u' means unsigned int
 
    return 0;
 }
