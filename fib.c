@@ -42,10 +42,22 @@ unsigned int fib_iterate(unsigned int n) {
 
 int main(unsigned int argc, char *argv[]) {
 
+   if (argc != 4) {
+      printf("Invalid number of arguments\n");
+      printf("Usage: ./fib <num1> <fib_method> <file>\n");
+      return 1;
+   }
+
    //Receive and process all passed arguments
    unsigned int num1 = atoi(argv[1]);
 
    char fib_method = argv[2][0];           //"i" = iterative, "r" = recursive
+
+   if ((fib_method != 'i') && (fib_method != 'r')) {
+      printf("Invalid method. Fib method should either be an 'i' or a 'r'.\n");
+      printf("Usage: ./fib <num1> <fib_method> <file>\n");
+      return 1;
+   }
 
    unsigned int num2 = 0;
 
